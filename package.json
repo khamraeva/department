@@ -1,0 +1,14 @@
+{
+  "name": "department",
+  "version": "1.0.0",
+  "description": "",
+  "main": "hwork.js",
+  "scripts": {
+    "test": "jasmine --random=false"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "jasmine": "3.5.0"
+  }
+}
