@@ -3,7 +3,7 @@ const jasmine = require('jasmine');
 describe("Department salary", function() {
 	let salaryWithBonus;
 	const employees = [];
-	const { Designer, Manager, Developer } = require('../../hwork');
+	const { Designer, Manager, Developer } = require('../../lib/department');
 
 	describe("Designer with less expirience", function() {
 		beforeEach(function() {
