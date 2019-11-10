@@ -21,7 +21,7 @@ app.post('/api/v1/employees', (req, res, next) => {
 	} else if (req.body.type === 'developer') {
 		employee = new Developer(req.body);
 	} else {
-		return res.status(404).end();
+		return res.status(400).end();
 	}
 	employees.push(employee);
 	employee.id = employees.length - 1;

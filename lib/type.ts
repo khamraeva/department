@@ -1,11 +1,11 @@
 class Department {
-	constructor({ managers = [] }) {
+	constructor(public managers: Manager[]) {
 		this.managers = managers;
 	}
-	addManager(manager) {
+	addManager(manager: Manager): void {
 		this.managers.push(manager);
 	}
-	giveSalary() {
+	giveSalary(): void {
 		for (let i = 0; i < this.managers.length; i++) {
 			const manager = this.managers[i];
 			for (let j = 0; j < manager.teamMembers.length; j++) {
@@ -15,15 +15,19 @@ class Department {
 		}
 	}
 }
+
 class Employee {
-	constructor({ firstName, lastName, salary, experience, manager }) {
-		this.firstName = firstName;
-		this.lastName = lastName;
-		this.experience = experience;
-		this.manager = manager;
-		this.salary = salary;
+
+	constructor (
+		public firstName: string,
+		public lastName: string,
+		public salary: number,
+		public experience: number,
+		public manager: Manager
+	) {
 	}
-	getSalaryWithBonus() {
+
+	getSalaryWithBonus(): number {
 		if (this.experience > 2) {
 			return this.salary + 200;
 		} else if (this.experience > 5) {
@@ -32,42 +36,66 @@ class Employee {
 			return this.salary;
 		}
 	}
-	toString() {
+
+	toString(): string {
 		return `${this.firstName} ${this.lastName}, manager: ${this.manager.lastName}, experience: ${this.experience}`;
 	}
-	addManager(manager) {
+
+	addManager(manager: Manager): void {
 		this.manager = manager;
 	}
 }
 
 class Designer extends Employee {
-	constructor(params) {
-		super(params);
-		const { effCoeff } = params;
-		this.effCoeff = effCoeff;
-		this.type = 'designer';
+	public readonly type: string = 'designer';
+
+	constructor(
+		public firstName: string,
+		public lastName: string,
+		public salary: number,
+		public experience: number,
+		public manager: Manager,
+		public effCoeff: number
+	) {
+		super(firstName, lastName, salary, experience, manager);
 	}
-	getSalaryWithBonus() {
+	getSalaryWithBonus(): number {
 		const basicSalary = super.getSalaryWithBonus();
 		return basicSalary * this.effCoeff;
 	}
 }
+
 class Developer extends Employee {
-	constructor(params) {
-		super(params);
-		this.type = 'developer';
+	public readonly type: string = 'developer';
+
+	constructor(
+		public firstName: string,
+		public lastName: string,
+		public salary: number,
+		public experience: number,
+		public manager: Manager
+	) {
+		super(firstName, lastName, salary, experience, manager);
 	}
 }
+
 class Manager extends Employee {
-	constructor(params) {
-		super(params);
-		const { teamMembers = [] } = params;
-		this.teamMembers = teamMembers;
+	constructor(
+		public firstName: string,
+		public lastName: string,
+		public salary: number,
+		public experience: number,
+		public manager: Manager,
+		public teamMembers: Employee[]
+	) {
+		super(firstName, lastName, salary, experience, manager);
 	}
-	addTeamMember(teamMember) {
+
+	addTeamMember(teamMember: Employee): void {
 		this.teamMembers.push(teamMember);
 	}
-	getSalaryWithBonus() {
+
+	getSalaryWithBonus(): number {
 		const basicSalary = super.getSalaryWithBonus();
 		let salaryWithBonus = basicSalary;
 		if (this.teamMembers.length > 5) {
@@ -87,5 +115,4 @@ class Manager extends Employee {
 		return salaryWithBonus;
 	}
 }
-
-module.exports = { Developer, Designer, Manager, Department };
+export = { Developer, Designer, Manager, Department };
